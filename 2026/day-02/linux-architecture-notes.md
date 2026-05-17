@@ -63,3 +63,11 @@ Configuration		      Complex Shell Scripts		            Simple Unit Files (.serv
 Dependency		        Manual ordering			                Automatic dependency handling
 Logging			          Scattered in /var/log/		          Centralized via journalctl
 Process Tracking	    Hard to track child processes	      Uses "Cgroups" to track everything
+
+Processes : 
+Code        State           Description
+R          Running          Actively using CPU or ready to run
+S          Sleeping         Waiting for an event; can be interrupted
+D          Disk Sleep       Waiting for I/O; cannot be interrupted
+T          Stopped          Suspended by signal or debugger
+Z          Zombie           Terminated but not yet "reaped" by parent
