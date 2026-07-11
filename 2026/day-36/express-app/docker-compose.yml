@@ -1,0 +1,52 @@
+#version: "3.9"
+
+services:
+  app:
+    build: .
+    container_name: express-app
+
+    ports:
+      - "3000:3000"
+
+    env_file:
+      - .env
+
+    depends_on:
+      mongodb:
+        condition: service_healthy
+
+    networks:
+      - app-network
+
+  mongodb:
+    image: mongo:7
+
+    container_name: mongodb
+
+    restart: unless-stopped
+
+    env_file:
+      - .env
+
+    ports:
+      - "27017:27017"
+
+    volumes:
+      - mongo-data:/data/db
+
+    networks:
+      - app-network
+
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+volumes:
+  mongo-data:
+
+networks:
+  app-network:
+    driver: bridge
