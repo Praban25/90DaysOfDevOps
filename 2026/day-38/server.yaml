@@ -1,0 +1,24 @@
+---
+server:
+  name: server-1
+  ip: 192.168.2.10
+  port: 80
+
+database:
+  host: localhost
+  name: db-server
+  credentials:
+    user: admin
+    password: dbadmin@123
+
+
+startup_script: |
+  #!/bin/bash
+  sudo apt update
+  sudo apt install -y nginx
+  sudo systemctl enable nginx
+  sudo systemctl start nginx
+
+description:   >
+  This will update system, then install nginx,
+  enable nginx at every boot and start nginx service.
